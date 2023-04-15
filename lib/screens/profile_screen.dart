@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_9/screens/login_screen.dart';
 import 'package:flutter_9/shared_preferences.dart';
+import 'package:sizer/sizer.dart';
 
 class ProfileWidget extends StatefulWidget {
   const ProfileWidget({Key? key}) : super(key: key);
@@ -29,64 +30,141 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
-          padding:
-              const EdgeInsets.only(top: 30, left: 30, right: 30, bottom: 10),
-          decoration: const BoxDecoration(
-            color: Color(0xFFF5F5F5),
+  Widget build(BuildContext context) => LayoutBuilder(
+        builder: (_, constraints) => SafeArea(
+          child: Scaffold(
+            body: SizerUtil.orientation == Orientation.portrait
+                ? portraitLayout()
+                : landscapeLayout(),
           ),
-          alignment: Alignment.center,
-          child: Form(
-            key: _formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                //mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  buildHelloText(),
-                  const SizedBox(
-                    height: 20,
+        ),
+      );
+
+  Widget landscapeLayout() => Container(
+        padding: const EdgeInsets.only(top: 0, left: 0, right: 30, bottom: 0),
+        decoration: const BoxDecoration(
+          color: Color(0xFFF5F5F5),
+        ),
+        alignment: Alignment.center,
+        child: Row(
+          children: [
+            Expanded(
+              flex: 4,
+              child: Container(
+                // alignment: Alignment.center,
+                height: double.infinity,
+                //height: MediaQuery.of(context).size.height,
+                padding: EdgeInsets.all(10),
+                color: Color(0xFFD9D9D9),
+                child: SingleChildScrollView(
+                  child: Column(
+                    //mainAxisSize: MainAxisSize.max,
+                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      buildHelloText(),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      buildAvatar(),
+                      const SizedBox(
+                        height: 100,
+                      ),
+                      buildExitText(),
+                    ],
                   ),
-                  buildAvatar(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  buildNameText(),
-                  buildNameField(),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  buildEmailText(),
-                  buildEmailField(),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  buildPhoneText(),
-                  buildPhoneField(),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  buildAboutYouText(),
-                  buildAboutYouField(),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  buildElevatedButtonSave(),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  buildExitText(),
-                ],
+                ),
               ),
+            ),
+            Expanded(flex: 1, child: Column()),
+            Expanded(
+              flex: 7,
+              child: SingleChildScrollView(
+                child: Column(
+                  //mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    buildNameText(),
+                    buildNameField(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    buildEmailText(),
+                    buildEmailField(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    buildPhoneText(),
+                    buildPhoneField(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    buildAboutYouText(),
+                    buildAboutYouField(),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    buildElevatedButtonSave(),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+
+  Widget portraitLayout() => Container(
+        padding:
+            const EdgeInsets.only(top: 30, left: 30, right: 30, bottom: 10),
+        decoration: const BoxDecoration(
+          color: Color(0xFFF5F5F5),
+        ),
+        alignment: Alignment.center,
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              //mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                buildHelloText(),
+                const SizedBox(
+                  height: 20,
+                ),
+                buildAvatar(),
+                const SizedBox(
+                  height: 20,
+                ),
+                buildNameText(),
+                buildNameField(),
+                const SizedBox(
+                  height: 15,
+                ),
+                buildEmailText(),
+                buildEmailField(),
+                const SizedBox(
+                  height: 15,
+                ),
+                buildPhoneText(),
+                buildPhoneField(),
+                const SizedBox(
+                  height: 15,
+                ),
+                buildAboutYouText(),
+                buildAboutYouField(),
+                const SizedBox(
+                  height: 25,
+                ),
+                buildElevatedButtonSave(),
+                const SizedBox(
+                  height: 30,
+                ),
+                buildExitText(),
+              ],
             ),
           ),
         ),
-      ),
-    );
-  }
+      );
 
   Widget buildHelloText() {
     return Center(
@@ -94,7 +172,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
         'Hello, $_name!',
         style: const TextStyle(
           fontFamily: 'Inter-Black',
-          fontSize: 30,
+          fontSize: 25,
           color: Color(0xFF000000),
         ),
       ),
@@ -129,15 +207,15 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   Widget buildNameField() {
     return TextFormField(
       initialValue: _name,
+      style: TextStyle(
+        fontFamily: 'Inter-SemiBold',
+        fontSize: 16,
+        color: Color(0xFF000000),
+      ),
       decoration: const InputDecoration(
         border: InputBorder.none,
         fillColor: Color(0xFFD9D9D9),
         filled: true,
-        hintStyle: TextStyle(
-          fontFamily: 'Inter-SemiBold',
-          fontSize: 16,
-          color: Color(0xFF000000),
-        ),
       ),
       keyboardType: TextInputType.name,
       validator: (value) {
@@ -164,15 +242,15 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   Widget buildEmailField() {
     return TextFormField(
       initialValue: _email,
+      style: TextStyle(
+        fontFamily: 'Inter-SemiBold',
+        fontSize: 16,
+        color: Color(0xFF000000),
+      ),
       decoration: const InputDecoration(
         border: InputBorder.none,
         fillColor: Color(0xFFD9D9D9),
         filled: true,
-        hintStyle: TextStyle(
-          fontFamily: 'Inter-SemiBold',
-          fontSize: 16,
-          color: Color(0xFF000000),
-        ),
       ),
       keyboardType: TextInputType.emailAddress,
       validator: (value) {
@@ -188,7 +266,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
     );
   }
 
-/////
   Widget buildPhoneText() {
     return const Text(
       'Phone number',
@@ -203,15 +280,15 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   Widget buildPhoneField() {
     return TextFormField(
       initialValue: _phone,
+      style: TextStyle(
+        fontFamily: 'Inter-SemiBold',
+        fontSize: 16,
+        color: Color(0xFF000000),
+      ),
       decoration: const InputDecoration(
         border: InputBorder.none,
         fillColor: Color(0xFFD9D9D9),
         filled: true,
-        hintStyle: TextStyle(
-          fontFamily: 'Inter-SemiBold',
-          fontSize: 16,
-          color: Color(0xFF000000),
-        ),
       ),
       keyboardType: TextInputType.phone,
       validator: (value) {
@@ -243,15 +320,15 @@ class _ProfileWidgetState extends State<ProfileWidget> {
     return TextFormField(
       maxLines: null,
       initialValue: _info,
+      style: TextStyle(
+        fontFamily: 'Inter-SemiBold',
+        fontSize: 16,
+        color: Color(0xFF000000),
+      ),
       decoration: const InputDecoration(
         border: InputBorder.none,
         fillColor: Color(0xFFD9D9D9),
         filled: true,
-        hintStyle: TextStyle(
-          fontFamily: 'Inter-SemiBold',
-          fontSize: 16,
-          color: Color(0xFF000000),
-        ),
       ),
       keyboardType: TextInputType.text,
       onChanged: (value) => setState(() => _info = value),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_9/screens/register_screen.dart';
 import 'package:flutter_9/screens/profile_screen.dart';
 import 'package:flutter_9/shared_preferences.dart';
@@ -50,14 +49,52 @@ class _LoginWidgetState extends State<LoginWidget> {
       );
 
   Widget landscapeLayout() => Container(
+        padding: EdgeInsets.only(
+          right: 40.w,
+          left: 40.w,
+        ),
+        decoration: const BoxDecoration(
+          color: Color(0xFFF5F5F5),
+        ),
+        alignment: Alignment.center,
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              //mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                buildEmailText(),
+                buildEmailField(),
+                const SizedBox(
+                  height: 20,
+                ),
+                buildPasswordText(),
+                buildPasswordField(),
+                const SizedBox(
+                  height: 10,
+                ),
+                buildRememberCheckbox(),
+                const SizedBox(
+                  height: 20,
+                ),
+                buildElevatedButtonLogin(),
+                const SizedBox(
+                  height: 30,
+                ),
+                buildNewAccountText(),
+              ],
+            ),
+          ),
+        ),
+      );
+
+  portraitLayout() => Container(
         padding: const EdgeInsets.all(30),
         decoration: const BoxDecoration(
           color: Color(0xFFF5F5F5),
         ),
         alignment: Alignment.center,
-        constraints: BoxConstraints(
-          maxWidth: 500,
-        ),
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
@@ -90,52 +127,6 @@ class _LoginWidgetState extends State<LoginWidget> {
         ),
       );
 
-  portraitLayout() {}
-
-  // {
-  //   return SafeArea(
-  //     child: Scaffold(
-  //       body: Container(
-  //         padding: const EdgeInsets.all(30),
-  //         decoration: const BoxDecoration(
-  //           color: Color(0xFFF5F5F5),
-  //         ),
-  //         alignment: Alignment.center,
-  //         child: Form(
-  //           key: _formKey,
-  //           child: SingleChildScrollView(
-  //             child: Column(
-  //               //mainAxisAlignment: MainAxisAlignment.center,
-  //               crossAxisAlignment: CrossAxisAlignment.start,
-  //               children: <Widget>[
-  //                 buildEmailText(),
-  //                 buildEmailField(),
-  //                 const SizedBox(
-  //                   height: 25,
-  //                 ),
-  //                 buildPasswordText(),
-  //                 buildPasswordField(),
-  //                 const SizedBox(
-  //                   height: 25,
-  //                 ),
-  //                 buildRememberCheckbox(),
-  //                 const SizedBox(
-  //                   height: 50,
-  //                 ),
-  //                 buildElevatedButtonLogin(),
-  //                 const SizedBox(
-  //                   height: 80,
-  //                 ),
-  //                 buildNewAccountText(),
-  //               ],
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
   Widget buildEmailText() {
     return const Text(
       'Email',
@@ -150,17 +141,17 @@ class _LoginWidgetState extends State<LoginWidget> {
   Widget buildEmailField() {
     return TextFormField(
       initialValue: _email, //хранит значение, сохранненное в SharedPreferences
+      style: TextStyle(
+        fontFamily: 'Inter-SemiBold',
+        fontSize: 16,
+        color: Color(0xFF000000),
+      ),
       decoration: const InputDecoration(
         border: InputBorder.none,
         fillColor: Color(0xFFD9D9D9),
         filled: true,
-        //hintText: 'example@mail.com',
-        hintStyle: TextStyle(
-          fontFamily: 'Inter-SemiBold',
-          fontSize: 16,
-          color: Color(0xFF000000),
-        ),
       ),
+
       keyboardType: TextInputType.emailAddress,
       validator: (value) {
         if (value!.isEmpty) {
@@ -189,16 +180,15 @@ class _LoginWidgetState extends State<LoginWidget> {
   Widget buildPasswordField() {
     return TextFormField(
       initialValue: _password,
+      style: TextStyle(
+        fontFamily: 'Inter-SemiBold',
+        fontSize: 16,
+        color: Color(0xFF000000),
+      ),
       decoration: InputDecoration(
         border: InputBorder.none,
         fillColor: const Color(0xFFD9D9D9),
         filled: true,
-        //hintText: '******',
-        hintStyle: const TextStyle(
-          fontFamily: 'Inter-SemiBold',
-          fontSize: 16,
-          color: Color(0xFF000000),
-        ),
         suffixIcon: IconButton(
           icon: Icon(
             _showPassword ? Icons.visibility : Icons.visibility_off,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_9/screens/login_screen.dart';
 import 'package:flutter_9/screens/profile_screen.dart';
 import 'package:flutter_9/shared_preferences.dart';
+import 'package:sizer/sizer.dart';
 
 class RegisterWidget extends StatefulWidget {
   const RegisterWidget({Key? key}) : super(key: key);
@@ -33,60 +34,114 @@ class _RegisterWidgetState extends State<RegisterWidget> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
-          padding: const EdgeInsets.all(30),
-          decoration: const BoxDecoration(
-            color: Color(0xFFF5F5F5),
+  Widget build(BuildContext context) => LayoutBuilder(
+        builder: (_, constraints) => SafeArea(
+          child: Scaffold(
+            body: SizerUtil.orientation == Orientation.portrait
+                ? portraitLayout()
+                : landscapeLayout(),
           ),
-          alignment: Alignment.center,
-          child: Form(
-            key: _formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                //mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  buildNameText(),
-                  buildNameField(),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  buildEmailText(),
-                  buildEmailField(),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  buildPhoneText(),
-                  buildPhoneField(),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  buildPasswordText(),
-                  buildPasswordField(),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  buildRePasswordText(),
-                  buildRePasswordField(),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  buildElevatedButtonRegister(),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  buildOldAccountText(),
-                ],
-              ),
+        ),
+      );
+
+  Widget landscapeLayout() => Container(
+        padding:
+            EdgeInsets.only(right: 40.w, left: 40.w, top: 3.h, bottom: 3.h),
+        decoration: const BoxDecoration(
+          color: Color(0xFFF5F5F5),
+        ),
+        alignment: Alignment.center,
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              //mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                buildNameText(),
+                buildNameField(),
+                const SizedBox(
+                  height: 15,
+                ),
+                buildEmailText(),
+                buildEmailField(),
+                const SizedBox(
+                  height: 15,
+                ),
+                buildPhoneText(),
+                buildPhoneField(),
+                const SizedBox(
+                  height: 15,
+                ),
+                buildPasswordText(),
+                buildPasswordField(),
+                const SizedBox(
+                  height: 15,
+                ),
+                buildRePasswordText(),
+                buildRePasswordField(),
+                const SizedBox(
+                  height: 25,
+                ),
+                buildElevatedButtonRegister(),
+                const SizedBox(
+                  height: 30,
+                ),
+                buildOldAccountText(),
+              ],
             ),
           ),
         ),
-      ),
-    );
-  }
+      );
+
+  Widget portraitLayout() => Container(
+        padding: const EdgeInsets.all(30),
+        decoration: const BoxDecoration(
+          color: Color(0xFFF5F5F5),
+        ),
+        alignment: Alignment.center,
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              //mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                buildNameText(),
+                buildNameField(),
+                const SizedBox(
+                  height: 15,
+                ),
+                buildEmailText(),
+                buildEmailField(),
+                const SizedBox(
+                  height: 15,
+                ),
+                buildPhoneText(),
+                buildPhoneField(),
+                const SizedBox(
+                  height: 15,
+                ),
+                buildPasswordText(),
+                buildPasswordField(),
+                const SizedBox(
+                  height: 15,
+                ),
+                buildRePasswordText(),
+                buildRePasswordField(),
+                const SizedBox(
+                  height: 40,
+                ),
+                buildElevatedButtonRegister(),
+                const SizedBox(
+                  height: 50,
+                ),
+                buildOldAccountText(),
+              ],
+            ),
+          ),
+        ),
+      );
 
   Widget buildNameText() {
     return const Text(
@@ -102,15 +157,15 @@ class _RegisterWidgetState extends State<RegisterWidget> {
   Widget buildNameField() {
     return TextFormField(
       initialValue: _name,
+      style: TextStyle(
+        fontFamily: 'Inter-SemiBold',
+        fontSize: 16,
+        color: Color(0xFF000000),
+      ),
       decoration: const InputDecoration(
         border: InputBorder.none,
         fillColor: Color(0xFFD9D9D9),
         filled: true,
-        hintStyle: TextStyle(
-          fontFamily: 'Inter-SemiBold',
-          fontSize: 16,
-          color: Color(0xFF000000),
-        ),
       ),
       keyboardType: TextInputType.name,
       validator: (value) {
@@ -137,16 +192,15 @@ class _RegisterWidgetState extends State<RegisterWidget> {
   Widget buildEmailField() {
     return TextFormField(
       initialValue: _email,
+      style: TextStyle(
+        fontFamily: 'Inter-SemiBold',
+        fontSize: 16,
+        color: Color(0xFF000000),
+      ),
       decoration: const InputDecoration(
         border: InputBorder.none,
         fillColor: Color(0xFFD9D9D9),
         filled: true,
-        //hintText: 'example@mail.com',
-        hintStyle: TextStyle(
-          fontFamily: 'Inter-SemiBold',
-          fontSize: 16,
-          color: Color(0xFF000000),
-        ),
       ),
       keyboardType: TextInputType.emailAddress,
       validator: (value) {
@@ -176,15 +230,15 @@ class _RegisterWidgetState extends State<RegisterWidget> {
   Widget buildPhoneField() {
     return TextFormField(
       initialValue: _phone,
+      style: TextStyle(
+        fontFamily: 'Inter-SemiBold',
+        fontSize: 16,
+        color: Color(0xFF000000),
+      ),
       decoration: const InputDecoration(
         border: InputBorder.none,
         fillColor: Color(0xFFD9D9D9),
         filled: true,
-        hintStyle: TextStyle(
-          fontFamily: 'Inter-SemiBold',
-          fontSize: 16,
-          color: Color(0xFF000000),
-        ),
       ),
       keyboardType: TextInputType.phone,
       validator: (value) {
@@ -216,16 +270,15 @@ class _RegisterWidgetState extends State<RegisterWidget> {
     return TextFormField(
       initialValue:
           _password, //хранит значение, сохранненное в SharedPreferences
+      style: TextStyle(
+        fontFamily: 'Inter-SemiBold',
+        fontSize: 16,
+        color: Color(0xFF000000),
+      ),
       decoration: InputDecoration(
         border: InputBorder.none,
         fillColor: const Color(0xFFD9D9D9),
         filled: true,
-        //hintText: '******',
-        hintStyle: const TextStyle(
-          fontFamily: 'Inter-SemiBold',
-          fontSize: 16,
-          color: Color(0xFF000000),
-        ),
         suffixIcon: IconButton(
           icon: Icon(
             _showPassword ? Icons.visibility : Icons.visibility_off,
@@ -266,16 +319,15 @@ class _RegisterWidgetState extends State<RegisterWidget> {
   Widget buildRePasswordField() {
     return TextFormField(
       initialValue: _rePassword,
+      style: TextStyle(
+        fontFamily: 'Inter-SemiBold',
+        fontSize: 16,
+        color: Color(0xFF000000),
+      ),
       decoration: InputDecoration(
         border: InputBorder.none,
         fillColor: const Color(0xFFD9D9D9),
         filled: true,
-        //hintText: '******',
-        hintStyle: const TextStyle(
-          fontFamily: 'Inter-SemiBold',
-          fontSize: 16,
-          color: Color(0xFF000000),
-        ),
         suffixIcon: IconButton(
           icon: Icon(
             _showPassword ? Icons.visibility : Icons.visibility_off,
