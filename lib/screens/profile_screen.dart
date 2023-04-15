@@ -54,8 +54,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 // alignment: Alignment.center,
                 height: double.infinity,
                 //height: MediaQuery.of(context).size.height,
-                padding: EdgeInsets.all(10),
-                color: Color(0xFFD9D9D9),
+                padding: const EdgeInsets.all(10),
+                color: const Color(0xFFD9D9D9),
                 child: SingleChildScrollView(
                   child: Column(
                     //mainAxisSize: MainAxisSize.max,
@@ -70,7 +70,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       const SizedBox(
                         height: 100,
                       ),
-                      buildExitText(),
+                      buildExitTextButton(),
                     ],
                   ),
                 ),
@@ -159,7 +159,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 const SizedBox(
                   height: 30,
                 ),
-                buildExitText(),
+                buildExitTextButton(),
               ],
             ),
           ),
@@ -207,7 +207,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   Widget buildNameField() {
     return TextFormField(
       initialValue: _name,
-      style: TextStyle(
+      style: const TextStyle(
         fontFamily: 'Inter-SemiBold',
         fontSize: 16,
         color: Color(0xFF000000),
@@ -242,7 +242,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   Widget buildEmailField() {
     return TextFormField(
       initialValue: _email,
-      style: TextStyle(
+      style: const TextStyle(
         fontFamily: 'Inter-SemiBold',
         fontSize: 16,
         color: Color(0xFF000000),
@@ -280,7 +280,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   Widget buildPhoneField() {
     return TextFormField(
       initialValue: _phone,
-      style: TextStyle(
+      style: const TextStyle(
         fontFamily: 'Inter-SemiBold',
         fontSize: 16,
         color: Color(0xFF000000),
@@ -320,7 +320,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
     return TextFormField(
       maxLines: null,
       initialValue: _info,
-      style: TextStyle(
+      style: const TextStyle(
         fontFamily: 'Inter-SemiBold',
         fontSize: 16,
         color: Color(0xFF000000),
@@ -373,22 +373,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
     );
   }
 
-  Widget buildExitText() {
-    return GestureDetector(
-      onTap: () async {
-        setState(() {
-          _isPressed = true;
-        });
-        await Future.delayed(const Duration(milliseconds: 50));
-        // ignore: use_build_context_synchronously
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) {
-            return const LoginWidget();
-          }),
-        );
-      },
-      child: Center(
+  Widget buildExitTextButton() {
+    return Center(
+      child: TextButton(
         child: Text(
           'Exit',
           style: TextStyle(
@@ -398,6 +385,19 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 _isPressed ? const Color(0xFF17E444) : const Color(0xFF000000),
           ),
         ),
+        onPressed: () async {
+          setState(() {
+            _isPressed = true;
+          });
+          await Future.delayed(const Duration(milliseconds: 50));
+          // ignore: use_build_context_synchronously
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return const LoginWidget();
+            }),
+          );
+        },
       ),
     );
   }

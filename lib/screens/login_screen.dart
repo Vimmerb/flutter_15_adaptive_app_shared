@@ -82,7 +82,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                 const SizedBox(
                   height: 30,
                 ),
-                buildNewAccountText(),
+                buildNewAccountTextButton(),
               ],
             ),
           ),
@@ -120,7 +120,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                 const SizedBox(
                   height: 80,
                 ),
-                buildNewAccountText(),
+                buildNewAccountTextButton(),
               ],
             ),
           ),
@@ -141,7 +141,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   Widget buildEmailField() {
     return TextFormField(
       initialValue: _email, //хранит значение, сохранненное в SharedPreferences
-      style: TextStyle(
+      style: const TextStyle(
         fontFamily: 'Inter-SemiBold',
         fontSize: 16,
         color: Color(0xFF000000),
@@ -180,7 +180,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   Widget buildPasswordField() {
     return TextFormField(
       initialValue: _password,
-      style: TextStyle(
+      style: const TextStyle(
         fontFamily: 'Inter-SemiBold',
         fontSize: 16,
         color: Color(0xFF000000),
@@ -205,7 +205,7 @@ class _LoginWidgetState extends State<LoginWidget> {
         if (value!.isEmpty) {
           return 'Enter a password';
         }
-        if (_password != null && value != _password) {
+        if (value != _password) {
           return 'Incorrect password';
         }
         return null;
@@ -285,22 +285,9 @@ class _LoginWidgetState extends State<LoginWidget> {
     );
   }
 
-  Widget buildNewAccountText() {
-    return GestureDetector(
-      onTap: () async {
-        setState(() {
-          _isPressed = true;
-        });
-        await Future.delayed(const Duration(milliseconds: 50));
-        // ignore: use_build_context_synchronously
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) {
-            return const RegisterWidget();
-          }),
-        );
-      },
-      child: Center(
+  Widget buildNewAccountTextButton() {
+    return Center(
+      child: TextButton(
         child: Text(
           'CREATE NEW ACCOUNT',
           style: TextStyle(
@@ -310,6 +297,19 @@ class _LoginWidgetState extends State<LoginWidget> {
                 _isPressed ? const Color(0xFF17E444) : const Color(0xFF000000),
           ),
         ),
+        onPressed: () async {
+          setState(() {
+            _isPressed = true;
+          });
+          await Future.delayed(const Duration(milliseconds: 50));
+          // ignore: use_build_context_synchronously
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return const RegisterWidget();
+            }),
+          );
+        },
       ),
     );
   }

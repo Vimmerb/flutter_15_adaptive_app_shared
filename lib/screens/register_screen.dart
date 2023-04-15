@@ -87,7 +87,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                 const SizedBox(
                   height: 30,
                 ),
-                buildOldAccountText(),
+                buildOldAccountTextButton(),
               ],
             ),
           ),
@@ -136,7 +136,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                 const SizedBox(
                   height: 50,
                 ),
-                buildOldAccountText(),
+                buildOldAccountTextButton(),
               ],
             ),
           ),
@@ -157,7 +157,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
   Widget buildNameField() {
     return TextFormField(
       initialValue: _name,
-      style: TextStyle(
+      style: const TextStyle(
         fontFamily: 'Inter-SemiBold',
         fontSize: 16,
         color: Color(0xFF000000),
@@ -192,7 +192,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
   Widget buildEmailField() {
     return TextFormField(
       initialValue: _email,
-      style: TextStyle(
+      style: const TextStyle(
         fontFamily: 'Inter-SemiBold',
         fontSize: 16,
         color: Color(0xFF000000),
@@ -230,7 +230,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
   Widget buildPhoneField() {
     return TextFormField(
       initialValue: _phone,
-      style: TextStyle(
+      style: const TextStyle(
         fontFamily: 'Inter-SemiBold',
         fontSize: 16,
         color: Color(0xFF000000),
@@ -270,7 +270,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
     return TextFormField(
       initialValue:
           _password, //хранит значение, сохранненное в SharedPreferences
-      style: TextStyle(
+      style: const TextStyle(
         fontFamily: 'Inter-SemiBold',
         fontSize: 16,
         color: Color(0xFF000000),
@@ -319,7 +319,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
   Widget buildRePasswordField() {
     return TextFormField(
       initialValue: _rePassword,
-      style: TextStyle(
+      style: const TextStyle(
         fontFamily: 'Inter-SemiBold',
         fontSize: 16,
         color: Color(0xFF000000),
@@ -401,22 +401,9 @@ class _RegisterWidgetState extends State<RegisterWidget> {
     );
   }
 
-  Widget buildOldAccountText() {
-    return GestureDetector(
-      onTap: () async {
-        setState(() {
-          _isPressed = true;
-        });
-        await Future.delayed(const Duration(milliseconds: 50));
-        // ignore: use_build_context_synchronously
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) {
-            return const LoginWidget();
-          }),
-        );
-      },
-      child: Center(
+  Widget buildOldAccountTextButton() {
+    return Center(
+      child: TextButton(
         child: Text(
           'ALREADY REGISTERED',
           style: TextStyle(
@@ -426,6 +413,19 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                 _isPressed ? const Color(0xFF17E444) : const Color(0xFF000000),
           ),
         ),
+        onPressed: () async {
+          setState(() {
+            _isPressed = true;
+          });
+          await Future.delayed(const Duration(milliseconds: 50));
+          // ignore: use_build_context_synchronously
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return const LoginWidget();
+            }),
+          );
+        },
       ),
     );
   }
